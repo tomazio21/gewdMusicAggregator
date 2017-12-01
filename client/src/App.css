@@ -1,0 +1,27 @@
+a {
+  text-decoration: none;
+}
+
+a:visited { 
+  color: rgb(13, 13, 134);
+}
+
+h1 {
+  text-align: center;
+}
+
+td {
+  padding: 2px 4px;
+}
+
+th {
+  text-align: left;
+  padding: 2px 4px;
+  border-bottom-style: solid;
+  font-size: large;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}

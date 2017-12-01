@@ -1,0 +1,23 @@
+{
+  "name": "slacksongaggregator",
+  "version": "1.0.0",
+  "description": "slack song link scraper",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "check-node-version": "^2.1.0",
+    "express": "^4.16.2",
+    "faye-websocket": "^0.11.1",
+    "querystring": "^0.2.0",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
+    "sqlite3": "^3.1.13",
+    "ws": "^3.3.1"
+  }
+}
