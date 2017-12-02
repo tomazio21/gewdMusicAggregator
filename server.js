@@ -295,7 +295,7 @@ function delegateGroupMeMessageType(message) {
             //botPostMessage(message);
         }
         let spotifySongLink = "https://open.spotify.com/";
-        if(message.data.subject.text.includes(spotifySongLink)) {
+        if(message.data.subject.text.includes(spotifySongLink) && !message.data.subject.text.includes('playlist')) {
             processMessage(message, true);
         }
     } else if(message.data.type === 'typing') {
@@ -420,10 +420,6 @@ async function processMessage(message, isGroupMe) {
         datetime : Math.floor(new Date().getTime() / 1000)
     };
     createSongRecord(formattedData);
-}
-
-function processReaction(message, event) {
-    updateReactionCount(message.item.ts, event); 
 }
 
 // ---db functions
