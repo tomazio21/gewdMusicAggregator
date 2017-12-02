@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const WebSocketFaye = require('faye-websocket')
 const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
+const path = require('path');
 const app = express();
 var groupMeSocket;
 var db;
@@ -16,6 +17,7 @@ init();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.get('/byDate', (req, res) => {
     let sqlStmt = 'SELECT name, artist, album, link, user, reactions, date_posted FROM songs ORDER BY date_posted DESC';
@@ -65,8 +67,11 @@ app.get('/byAlbumRev', (req, res) => {
     let sqlStmt = 'SELECT name, artist, album, link, user, reactions, date_posted FROM songs ORDER BY album DESC';
     querySongData(sqlStmt, res);
 })
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname+'/client/build/index.html'));
+})
 
-app.listen(3001, () => console.log('Listening on port 3001'));
+app.listen(3000, () => console.log('Listening on port 3000'));
 
 function init() {
     let configFile = fs.readFileSync("config.json");
@@ -131,7 +136,12 @@ async function openWebsocketforGroupMe() {
             
         groupMeSocket.on('close', function(event) {
             console.log('close', event.code, event.reason);
-            groupMeSocket = null;
+            groupMeSocket = new WebSocketFaye.Client(url);
+        });
+
+        groupMeSocket.on('error', function (error) {
+            groupMeSocket.close();
+            groupMeSocket = new WebSocketFaye.Client(url);
         });
     } catch (error) {
         console.error(error);
